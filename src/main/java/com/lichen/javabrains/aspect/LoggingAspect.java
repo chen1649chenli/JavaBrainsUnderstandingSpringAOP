@@ -1,27 +1,28 @@
 package com.lichen.javabrains.aspect;
 
-import com.lichen.javabrains.model.Circle;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.JoinPoint;
 
 @Aspect
 public class LoggingAspect {
 
-    @Before("allGetters() && allModelMethods()")
-    void LoggingAdvice() {
-        System.out.println("Advice run. Get Method called");
+    @Before("allCircleMethods()")
+    void LoggingAdvice(JoinPoint jointPoint) {
+        System.out.println(jointPoint.getTarget());
     }
 
-    @Before("allGetters()")
-    void secondAdvice() {
-        System.out.println("Second Advice run. Get Method called");
+    @Before("args(name)")
+    public void stringArgumentMethods(String name){
+        System.out.println(" A method that takes string arguments has been called. And the value is: " + name);
     }
+
 
     @Pointcut("execution(public * get*())")
     public void allGetters() {};
 
-    @Pointcut("within(com.lichen.javabrains.model..*)")
-    public void allModelMethods() {}
+    @Pointcut("within(com.lichen.javabrains.model.Circle)")
+    public void allCircleMethods() {}
 
 }
