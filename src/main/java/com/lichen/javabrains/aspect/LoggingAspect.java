@@ -1,6 +1,8 @@
 package com.lichen.javabrains.aspect;
 
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -27,4 +29,17 @@ public class LoggingAspect {
     @Pointcut("within(com.lichen.javabrains.model.Circle)")
     public void allCircleMethods() {}
 
+    @Around("allGetters()")
+    public Object myAroundAdvice(ProceedingJoinPoint proceedingJoinPoint){
+
+        Object object = null;
+        try{
+            System.out.println("Before advice");
+            object = proceedingJoinPoint.proceed();
+            System.out.println("After advice");
+        } catch (Throwable e){
+            System.out.println("After throwing");
+        }
+        return object;
+    }
 }
