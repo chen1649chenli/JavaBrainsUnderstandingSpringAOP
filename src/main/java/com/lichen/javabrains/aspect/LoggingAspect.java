@@ -1,5 +1,6 @@
 package com.lichen.javabrains.aspect;
 
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -13,9 +14,10 @@ public class LoggingAspect {
         System.out.println(jointPoint.getTarget());
     }
 
-    @Before("args(name)")
-    public void stringArgumentMethods(String name){
-        System.out.println(" A method that takes string arguments has been called. And the value is: " + name);
+    @AfterReturning(pointcut = "args(name)", returning = "returnString")
+    public void stringArgumentMethods(String name, String returnString){
+        System.out.println(" A method that takes string arguments has been called. " +
+                "And the return value is: " + returnString);
     }
 
 
