@@ -29,7 +29,7 @@ public class LoggingAspect {
     @Pointcut("within(com.lichen.javabrains.model.Circle)")
     public void allCircleMethods() {}
 
-    @Around("allGetters()")
+    @Around("@annotation(com.lichen.javabrains.aspect.Loggable)")
     public Object myAroundAdvice(ProceedingJoinPoint proceedingJoinPoint){
 
         Object object = null;
